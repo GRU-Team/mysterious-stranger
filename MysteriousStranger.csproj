@@ -210,7 +210,9 @@
     <Compile Include="Bot\DiscordBot.cs" />
     <Compile Include="Bot\DiscordBotSettings.cs" />
     <Compile Include="LettersGridHandler.cs" />
+    <Compile Include="SymbolMap.cs" />
     <Compile Include="Modules\Commands.cs" />
+    <Compile Include="PlayerData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuadGrid.cs" />

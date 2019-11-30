@@ -16,6 +16,7 @@ namespace MysteriousStranger
         static void Main(string[] args) 
         {
             Config.LoadConfigFile();
+            SymbolMap.LoadSymbols();
             DiscordBot bot = new DiscordBot();
 
             LettersGridHandler.Init(

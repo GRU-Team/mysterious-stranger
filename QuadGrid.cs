@@ -15,7 +15,7 @@ namespace MysteriousStranger
             this.SizeOfGridSide = sizeOfGridSide;
             this.Grid = new List<List<Cell> > (sizeOfGridSide);
 
-            InitGridWithRandomCells();
+            InitGridWithZeroCells();
         }
 
         private void InitGridWithZeroCells()
@@ -40,7 +40,7 @@ namespace MysteriousStranger
                 {
                     Array values = Enum.GetValues(typeof(CellType));
                     var cellType = (CellType)values.GetValue(rnd.Next(values.Length));
-                    Grid.ElementAt(i).Add(new Cell(i, j, cellType, ""));
+                    Grid.ElementAt(i).Add(new Cell(i, j, cellType, "Some funny text"));
                 }
             }
 

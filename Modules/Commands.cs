@@ -11,15 +11,10 @@ namespace MysteriousStranger.Modules
 {
     public class Commands : ModuleBase<SocketCommandContext>
     {
-        [Command("ping")]
-        public async Task Ping()
+        [Command("start")]
+        public async Task StartGame()
         {
-            await ReplyAsync("Pong");
-        }
-
-        [Command("getAllGrid")]
-        public async Task GetAllGrid()
-        {
+            await Context.Message.DeleteAsync();
             string message = LettersGridHandler.GetGridInString();
             var msg = await ReplyAsync(message);
             LettersGridHandler.MessageWithGrid = msg;
@@ -28,26 +23,90 @@ namespace MysteriousStranger.Modules
         [Command ("changeGrid")]
         public async Task ModifyLastMessage()
         {
-            await Context.Client.CurrentUser.ModifyAsync(u => u.Username = "Mysterious Stranger");
-
-           // var UserMessage = MessageExtensions 
+            await ReplyAsync("No");
         }
 
 
         [Command("W")]
-        public async Task Move()
+        public async Task MoveUp()
         {
             if (LettersGridHandler.MessageWithGrid != null)
             {
-                LettersGridHandler.Init(20);
+                await Context.Message.DeleteAsync();
+                LettersGridHandler.MoveUp();
                 await LettersGridHandler.MessageWithGrid.ModifyAsync(x =>
                 x.Content = LettersGridHandler.GetGridInString());
             }
             else
             {
-                await ReplyAsync("Вызови поле");
+                await ReplyAsync("Поле ещё не было представлено твоему взору...");
             }
 
+        }
+
+        [Command ("S")]
+        public async Task MoveDown()
+        {
+            if (LettersGridHandler.MessageWithGrid != null)
+            {
+                await Context.Message.DeleteAsync();
+                LettersGridHandler.MoveDown();
+                await LettersGridHandler.MessageWithGrid.ModifyAsync(x =>
+                x.Content = LettersGridHandler.GetGridInString());
+            }
+            else
+            {
+                await ReplyAsync("Поле ещё не было представлено твоему взору...");
+            }
+        }
+
+        [Command("D")]
+        public async Task MoveRight()
+        {
+            if (LettersGridHandler.MessageWithGrid != null)
+            {
+                await Context.Message.DeleteAsync();
+                LettersGridHandler.MoveRight();
+                await LettersGridHandler.MessageWithGrid.ModifyAsync(x =>
+                x.Content = LettersGridHandler.GetGridInString());
+            }
+            else
+            {
+                await ReplyAsync("Поле ещё не было представлено твоему взору...");
+            }
+        }
+
+        [Command("A")]
+        public async Task MoveLeft()
+        {
+            if (LettersGridHandler.MessageWithGrid != null)
+            {
+                await Context.Message.DeleteAsync();
+                LettersGridHandler.MoveLeft();
+                await LettersGridHandler.MessageWithGrid.ModifyAsync(x =>
+                x.Content = LettersGridHandler.GetGridInString());
+            }
+            else
+            {
+                await ReplyAsync("Поле ещё не было представлено твоему взору...");
+            }
+        }
+
+        [Command("E")]
+        public async Task ReadLetter()
+        {
+            await Context.Message.DeleteAsync();
+            await ReplyAsync($"Найденное письмо гласит \"{LettersGridHandler.ReadMessage()}\"");
+            
+        }
+
+        [Command("Q")]
+        public async Task WriteMessage([Remainder] string message)
+        {
+            await Context.Message.DeleteAsync();
+            LettersGridHandler.WriteMessage(message);
+            await ReplyAsync($"Вы оставили свою записку здесь {Environment.NewLine}" +
+                $"Она гласит \"{message}\"");
         }
     }
 }

@@ -72,6 +72,7 @@
       <HintPath>packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
       <Private>True</Private>
@@ -203,11 +204,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DiscordBot.cs" />
-    <Compile Include="IBot.cs" />
+    <Compile Include="ConfigLoader.cs" />
+    <Compile Include="Bot\DiscordBot.cs" />
+    <Compile Include="Bot\DiscordBotSettings.cs" />
+    <Compile Include="LettersGridHandler.cs" />
     <Compile Include="Modules\Commands.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuadGrid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

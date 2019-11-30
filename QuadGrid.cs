@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace MysteriousStranger
 {
-    interface IBot
+    class QuadGrid
     {
-        Task RunBotAsync();
     }
 }

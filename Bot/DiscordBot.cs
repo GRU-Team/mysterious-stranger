@@ -11,28 +11,34 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MysteriousStranger
 {
-    internal sealed class DiscordBot : IBot
+    internal sealed class DiscordBot
     {
         private DiscordSocketClient client;
-        private CommandService discordCommandService;
+        private CommandService commandService;
         private IServiceProvider serviceProvider;
+        private DiscordBotSettings settings;
 
-        public async Task RunBotAsync()
+        internal DiscordBot()
+        {
+            this.settings = new DiscordBotSettings();
+            this.settings.Token = Config.appSettings.Settings["Token"].Value;
+            this.settings.Prefix = Config.appSettings.Settings["Prefix"].Value;
+        }
+
+        internal async Task RunBotAsync()
         {
             client = new DiscordSocketClient();
-            discordCommandService = new CommandService();
+            commandService = new CommandService();
             serviceProvider = new ServiceCollection()
                 .AddSingleton(client)
-                .AddSingleton(discordCommandService)
+                .AddSingleton(commandService)
                 .BuildServiceProvider();
-
-            string token = "NjUwMjk2NTkyNjU3NTQ3Mjc0.XeJSig.iZ0-UtH3DRnOrTgelOtdZj1vo0M";
 
             client.Log += DiscordClientLog_Log;
 
             await RegisterCommandAsync();
 
-            await client.LoginAsync(TokenType.Bot, token);
+            await client.LoginAsync(TokenType.Bot, settings.Token);
 
             await client.StartAsync();
 
@@ -42,7 +48,7 @@ namespace MysteriousStranger
         private async Task RegisterCommandAsync()
         {
             client.MessageReceived += HandleCommandAsync;
-            await discordCommandService.AddModulesAsync(Assembly.GetEntryAssembly(),
+            await commandService.AddModulesAsync(Assembly.GetEntryAssembly(),
                 serviceProvider);
         }
 
@@ -61,7 +67,7 @@ namespace MysteriousStranger
             int argPos = 0;
             if (message.HasStringPrefix("!", ref argPos))
             {
-                var result = await discordCommandService.ExecuteAsync(context, argPos, serviceProvider);
+                var result = await commandService.ExecuteAsync(context, argPos, serviceProvider);
                 if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);
 
             }

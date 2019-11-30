@@ -15,7 +15,8 @@ namespace MysteriousStranger
     {
         static void Main(string[] args) 
         {
-            IBot bot = new DiscordBot();
+            Config.LoadConfigFile();
+            DiscordBot bot = new DiscordBot();
             bot.RunBotAsync().GetAwaiter().GetResult();
         }
     }

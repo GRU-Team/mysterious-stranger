@@ -17,6 +17,12 @@ namespace MysteriousStranger
         {
             Config.LoadConfigFile();
             DiscordBot bot = new DiscordBot();
+
+            LettersGridHandler.Init(
+                Convert.ToInt32(
+                    Config.appSettings.Settings["LetterGridSize"].Value));
+            Console.WriteLine(LettersGridHandler.GetGridInString());
+
             bot.RunBotAsync().GetAwaiter().GetResult();
         }
     }
